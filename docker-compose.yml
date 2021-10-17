@@ -1,0 +1,38 @@
+version: "3"
+services:
+  web:
+    #restart policy
+    restart: always
+    #if filename is ./Dockerfile
+    #build: .
+    build:
+      #path to dockerfile
+      context: .
+      #docker filename
+      dockerfile: Dockerfile.dev
+
+    ports:
+      - "3000:3000"
+    volumes:
+      #use dir in container
+      - /app/node_modules
+      #maps local dir : container dir
+      - .:/app
+  tests:
+    #restart policy
+    restart: always
+    #if filename is ./Dockerfile
+    #build: .
+    build:
+      #path to dockerfile
+      context: .
+      #docker filename
+      dockerfile: Dockerfile.dev
+    #ports:
+    #  - "3000:3000"
+    volumes:
+      #use dir in container
+      - /app/node_modules
+      #maps local dir : container dir
+      - .:/app
+    command: ["npm", "run", "test"]
